@@ -1,10 +1,11 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Validators } from '@angular/forms';
+
 import { PlatformFormGeneratorModule } from '../form/form-generator/fdp-form-generator.module';
 import { BaseWizardGenerator } from './base-wizard-generator';
-
 import { WizardGeneratorService } from './wizard-generator.service';
+import { PlatformWizardGeneratorModule } from './wizard-generator.module';
 
 let shouldShow = false;
 
@@ -112,7 +113,7 @@ describe('WizardGeneratorService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [PlatformFormGeneratorModule],
+            imports: [PlatformFormGeneratorModule, PlatformWizardGeneratorModule],
             declarations: [WizardGeneratorTestComponent]
         }).compileComponents();
 
