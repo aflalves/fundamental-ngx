@@ -7,7 +7,7 @@ import { DialogService, DialogConfig, uuidv4 } from '@fundamental-ngx/core';
 import { TableRowSelectionChangeEvent } from '../../table/public_api';
 
 import { NewFolderComponent } from '../dialogs/new-folder/new-folder.component';
-import {  MoveToComponent } from '../dialogs/move-to/move-to.component';
+import { MoveToComponent } from '../dialogs/move-to/move-to.component';
 import { FilesValidatorService, FilesValidatorOutput } from '../services/files-validator.service';
 import {
     UploadCollectionFile,
@@ -32,6 +32,7 @@ import { isDataSource } from '../../../domain';
 import { UploadCollectionDataSource } from '../domain';
 
 export type FdpUploadCollectionDataSource = UploadCollectionDataSource;
+let randomId = 0;
 
 @Component({
     selector: 'fdp-upload-collection',
@@ -41,7 +42,7 @@ export type FdpUploadCollectionDataSource = UploadCollectionDataSource;
 })
 export class UploadCollectionComponent {
     @Input()
-    id: string;
+    id = `fdp-upload-collection-id-${randomId++}`;
 
     /** Defines the number of items on the page */
     @Input()
