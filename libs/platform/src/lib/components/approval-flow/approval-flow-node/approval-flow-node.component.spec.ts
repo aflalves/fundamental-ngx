@@ -1,5 +1,6 @@
 import { ChangeDetectorRef } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+
 import { ApprovalNode, PlatformApprovalFlowModule } from '@fundamental-ngx/platform';
 
 import { ApprovalFlowNodeComponent } from './approval-flow-node.component';
@@ -27,7 +28,6 @@ describe('ApprovalFlowNodeComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            declarations: [ApprovalFlowNodeComponent],
             imports: [PlatformApprovalFlowModule]
         }).compileComponents();
     });
