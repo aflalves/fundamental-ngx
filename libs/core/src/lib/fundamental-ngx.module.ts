@@ -81,6 +81,7 @@ import { TreeModule } from '@fundamental-ngx/core/tree';
 import { WizardModule } from '@fundamental-ngx/core/wizard';
 import { SplitButtonModule } from '@fundamental-ngx/core/split-button';
 import { SideNavigationModule } from '@fundamental-ngx/core/side-navigation';
+import { IconTabBarModule } from '@fundamental-ngx/core/icon-tab-bar';
 
 @NgModule({
     imports: [CommonModule, FormsModule],
@@ -173,7 +174,8 @@ import { SideNavigationModule } from '@fundamental-ngx/core/side-navigation';
         IllustratedMessageModule,
         StatusIndicatorModule,
         GridListModule,
-        ResizableCardLayoutModule
+        ResizableCardLayoutModule,
+        IconTabBarModule,
     ],
     providers: []
 })
