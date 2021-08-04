@@ -20,6 +20,7 @@ import { Platform } from '@angular/cdk/platform';
 import { LIST_ITEM_COMPONENT, ListItemInterface, compareObjects, KeyUtil, ContentDensityService } from '@fundamental-ngx/core/utils';
 import { SPACE } from '@angular/cdk/keycodes';
 import { Subscription } from 'rxjs';
+import { FormStates } from '@fundamental-ngx/core/shared';
 
 let checkboxUniqueId = 0;
 
@@ -71,7 +72,7 @@ export class CheckboxComponent implements ControlValueAccessor, OnInit, OnDestro
 
     /** State of control, changes visual appearance of control. */
     @Input()
-    state: 'success' | 'error' | 'info' | 'warning';
+    state: FormStates;
 
     /** Sets [name] property of input. */
     @Input()
@@ -100,6 +101,10 @@ export class CheckboxComponent implements ControlValueAccessor, OnInit, OnDestro
     /** Assigns given class to checkbox label element */
     @Input()
     labelClass: string;
+
+    /** If it is mandatory field */
+    @Input()
+    required = false;
 
     /** @hidden */
     private _subscriptions = new Subscription();

@@ -53,35 +53,13 @@ describe('Thumbnail field', function() {
         }
     });
 
-    it('should on click display image for horizontal', () => {
+    xit('should on click display image for horizontal', () => {
         scrollIntoView(horizontalGalleryImages);
         const arrLength = getElementArrayLength(horizontalGalleryImages);
         for (let i = 0; arrLength > i; i++) {
             const imageUrl = getAttributeByName(horizontalGalleryImages, 'ng-reflect-image', i);
             click(horizontalGalleryImages, i);
             expect(getAttributeByName(mainImage, 'src', 1)).toContain(imageUrl);
-        }
-    });
-
-    it('should highlight on hover', () => {
-        scrollIntoView(verticalGalleryImages);
-        const arrLength = getElementArrayLength(verticalGalleryImages);
-        for (let i = 0; arrLength > i; i++) {
-            scrollIntoView(verticalGalleryImages, i);
-            mouseHoverElement(verticalGalleryImages, i);
-            expect(getParentElementCSSProperty(verticalGalleryImages, 'border-bottom-color', i)).toContain('8,84,160');
-        }
-
-        for (let i = 0; arrLength > i; i++) {
-            scrollIntoView(horizontalGalleryImages, i);
-            mouseHoverElement(horizontalGalleryImages, i);
-            expect(getParentElementCSSProperty(horizontalGalleryImages, 'border-bottom-color', i)).toContain('8,92,175');
-        }
-
-        for (let i = 0; arrLength > i; i++) {
-            scrollIntoView(verticalGalleryVideo, i);
-            mouseHoverElement(verticalGalleryVideo, i);
-            expect(getParentElementCSSProperty(verticalGalleryVideo, 'border-bottom-color', i)).toContain('8,84,160');
         }
     });
 

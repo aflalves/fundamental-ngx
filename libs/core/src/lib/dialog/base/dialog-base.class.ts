@@ -1,26 +1,23 @@
-import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Directive,
-    ElementRef,
-    HostListener,
-    OnDestroy,
-    OnInit
-} from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Directive, ElementRef, HostBinding, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { NavigationStart, Router } from '@angular/router';
 import { ESCAPE } from '@angular/cdk/keycodes';
-
 import { fromEvent, Subscription } from 'rxjs';
 import { debounceTime, filter } from 'rxjs/operators';
-import { createFocusTrap, FocusTrap } from 'focus-trap';
+
+import { KeyUtil, RtlService, FocusTrapService } from '@fundamental-ngx/core/utils';
 
 import { DialogConfigBase } from './dialog-config-base.class';
 import { DialogRefBase } from './dialog-ref-base.class';
 import { DialogSize, dialogWidthToSize } from '../utils/dialog-width-to-size';
-import { KeyUtil } from '@fundamental-ngx/core/utils';
 
 @Directive()
 export abstract class DialogBase implements OnInit, AfterViewInit, OnDestroy {
+
+    /**
+     * @hidden
+     */
+    @HostBinding('attr.dir')
+    _dir: string;
 
     /** @hidden Reference to dialog window element*/
     abstract dialogWindow: ElementRef;
@@ -29,7 +26,7 @@ export abstract class DialogBase implements OnInit, AfterViewInit, OnDestroy {
     dialogPaddingSize: DialogSize;
 
     /** @hidden */
-    protected _focusTrap: FocusTrap;
+    protected _focusTrapId: string;
 
     /** @hidden */
     private _subscriptions = new Subscription();
@@ -60,12 +57,20 @@ export abstract class DialogBase implements OnInit, AfterViewInit, OnDestroy {
     constructor(
         protected _router: Router,
         protected _elementRef: ElementRef,
-        protected _changeDetectorRef: ChangeDetectorRef
+        protected _changeDetectorRef: ChangeDetectorRef,
+        protected _rtlService: RtlService,
+        protected _focusTrapService: FocusTrapService
     ) {}
 
     /** @hidden */
     ngOnInit(): void {
         this._listenAndCloseOnNavigation();
+        this._subscriptions.add(
+            this._rtlService?.rtl.subscribe(isRtl => {
+                this._dir = isRtl ? 'rtl' : 'ltr';
+                this._changeDetectorRef.detectChanges();
+            })
+        );
     }
 
     /** @hidden */
@@ -100,7 +105,7 @@ export abstract class DialogBase implements OnInit, AfterViewInit, OnDestroy {
             this._subscriptions.add(
                 this._router.events.pipe(
                     filter(event => event instanceof NavigationStart && this._config.closeOnNavigation)
-                ).subscribe(event => this._ref.dismiss())
+                ).subscribe(() => this._ref.dismiss())
             );
         }
     }
@@ -109,21 +114,19 @@ export abstract class DialogBase implements OnInit, AfterViewInit, OnDestroy {
     private _trapFocus(): void {
         if (this._config.focusTrapped) {
             try {
-                this._focusTrap = createFocusTrap(this.dialogWindow.nativeElement, {
+
+                this._focusTrapId = this._focusTrapService.createFocusTrap(this.dialogWindow.nativeElement, {
                     clickOutsideDeactivates: this._config.backdropClickCloseable && this._config.hasBackdrop,
                     escapeDeactivates: false,
-                    allowOutsideClick: (event: MouseEvent) => true
+                    allowOutsideClick: () => true
                 });
-                this._focusTrap.activate();
             } catch (e) {}
         }
     }
 
     /** @hidden */
     private _deactivateFocusTrap(): void {
-        if (this._focusTrap) {
-            this._focusTrap.deactivate();
-        }
+        this._focusTrapService.deactivateFocusTrap(this._focusTrapId);
     }
 
     /** @hidden Set dialog window position */

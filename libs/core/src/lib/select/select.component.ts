@@ -109,6 +109,10 @@ export class SelectComponent implements
     @Input()
     disabled = false;
 
+    /** If it is mandatory field */
+    @Input()
+    required = false;
+
     /** Whether the select component is readonly. */
     @Input()
     readonly = false;

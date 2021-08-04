@@ -15,7 +15,7 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { applyCssClass } from '@fundamental-ngx/core/utils';
+import { applyCssClass, FocusTrapService, RtlService } from '@fundamental-ngx/core/utils';
 import { CssClassBuilder } from '@fundamental-ngx/core/utils';
 import {
     MESSAGE_BOX_CONFIGURABLE_ELEMENT,
@@ -88,10 +88,12 @@ export class MessageBoxComponent extends DialogBase implements OnInit, OnChanges
         @Optional() public _messageBoxConfig: MessageBoxConfig,
         @Optional() private _messageBoxRef: MessageBoxRef,
         @Optional() router: Router,
+        @Optional() rtlService: RtlService,
+        focusTrapService: FocusTrapService,
         changeDetectorRef: ChangeDetectorRef,
         elementRef: ElementRef
     ) {
-        super(router, elementRef, changeDetectorRef);
+        super(router, elementRef, changeDetectorRef, rtlService, focusTrapService);
     }
 
     /** @hidden */

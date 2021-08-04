@@ -134,6 +134,14 @@
         "fdp"
       ],
       "implicitDependencies": ["core"]
+    }, 
+    "moment-adapter": {
+      "tags": [
+        "fd"
+      ],
+      "implicitDependencies": [
+        "core-datetime"
+      ]
     },
     "core-breadcrumb": {
       "tags": [
@@ -620,7 +628,8 @@
         "fd"
       ],
       "implicitDependencies": [
-        "core-utils"
+        "core-utils",
+        "core-mobile-mode"
       ]
     },
     "core-product-switch": {

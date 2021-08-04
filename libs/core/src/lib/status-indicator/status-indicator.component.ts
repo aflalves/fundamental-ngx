@@ -34,6 +34,9 @@ export interface Point {
         '[attr.title]': 'title',
         '[attr.role]': 'role',
         '[attr.aria-valuetext]': 'ariaValueText',
+        '[attr.aria-valuenow]': 'fillPercentage ? fillPercentage : 0',
+        '[attr.aria-valuemin]': '0',
+        '[attr.aria-valuemax]': '100',
         '[attr.tabindex]': 'focusable ? 0 : -1'
     },
     encapsulation: ViewEncapsulation.None,
@@ -71,12 +74,6 @@ export class StatusIndicatorComponent implements OnChanges, AfterViewInit, CssCl
      */
     @Input()
     viewBox: string;
-
-    /**
-     * boolean value to define requirement of the label.
-     */
-    @Input()
-    hasLabel: boolean;
 
     /**
      * boolean value to be marked as a clickable

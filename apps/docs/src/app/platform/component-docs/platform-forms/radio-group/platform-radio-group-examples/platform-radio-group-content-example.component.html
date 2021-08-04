@@ -45,13 +45,17 @@
 <p>Radio group with disabled button and validation error</p>
 <form #myForm="ngForm" (ngSubmit)="onSubmit(myForm)">
     <fdp-form-group [formGroup]="form4">
-        <fdp-form-field #ffl4 id="radioc4" rank="1" [required]="true">
-            <fdp-radio-group name="radioc4" contentDensity="compact" [isInline]="true" [formControl]="ffl4.formControl">
+        <fdp-form-field #ffl4 id="radioc4" rank="1" required="true" label="select your favorite month">
+            <fdp-radio-group name="radioc4" contentDensity="compact" [isInline]="true"
+                ariaLabel="select your favorite month" [formControl]="ffl4.formControl">
                 <fdp-radio-button value="january">January</fdp-radio-button>
                 <fdp-radio-button value="february">February</fdp-radio-button>
                 <fdp-radio-button value="march">March</fdp-radio-button>
                 <fdp-radio-button value="april">April</fdp-radio-button>
             </fdp-radio-group>
+            <fdp-button contentDensity="compact" type="submit" label="Submit"></fdp-button>
+            <fdp-button contentDensity="compact" type="reset" style="margin: 2rem 2rem 0 2rem;" label="Reset"
+                (click)="onReset(myForm)"></fdp-button>
         </fdp-form-field>
 
         <ng-template #i18n let-errors>
@@ -60,9 +64,6 @@
             </ng-container>
         </ng-template>
     </fdp-form-group>
-    <fdp-button contentDensity="compact" type="submit" style="margin-left: 2rem;" label="Submit"></fdp-button>
-    <fdp-button contentDensity="compact" type="reset" style="margin-left: 2rem;" label="Reset"
-        (click)="onReset(myForm)"></fdp-button>
 </form>
 <p style="margin-left: 2rem;">Selected value: {{ form4.controls.radioc4?.value }}</p>
 <br />

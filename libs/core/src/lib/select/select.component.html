@@ -27,6 +27,7 @@
         [attr.aria-expanded]="_isOpen" [attr.aria-disabled]="disabled" [attr.aria-readonly]="readonly"
         [attr.aria-controls]="controlId + '-list-box'" [attr.aria-haspopup]="!(this.readonly || this.disabled)"
         [attr.title]="triggerValue" [attr.aria-label]="triggerValue" [attr.aria-labelledby]="triggerValue"
+        [attr.aria-required]="required"
         [attr.aria-activedescendant]="_getAriaActiveDescendant()" (focus)="_onFocus()" (blur)="_onBlur()">
         <div  role="listitem" class="fd-select__text-content"  [attr.aria-label]="triggerValue">
             <ng-container [ngTemplateOutlet]="controlTemplate ? controlTemplate : defaultSelectContent"

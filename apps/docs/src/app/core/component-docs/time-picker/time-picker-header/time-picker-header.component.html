@@ -7,12 +7,15 @@
     <br /><br />
     The Time Picker component <strong>relies on provided datetime implementation</strong> (<code>DatetimeAdapter</code>)
     and <strong>datetime formats</strong> (<code>DateTimeFormats</code>).
+    <br />
+    Currently fundamental-ngx offer 2 kind of adapters: 
+    FdDateTimeAdapter and <a fd-link routerLink="/core/moment-datetime-adapter">MomentDateTimeAdapter</a>.
     <br /><br />
     The Time Picker component uses Time Component internally,
     for internationalization configuration, check
     <code>Internationalization</code> section in <code>Time</code> documentation
 </description>
-<import module="TimePickerModule"></import>
+<import module="TimePickerModule" subPackage="time-picker"></import>
 
 <fd-header-tabs></fd-header-tabs>
 <router-outlet></router-outlet>

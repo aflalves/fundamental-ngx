@@ -3,6 +3,7 @@
     class="fd-radio"
     [disabled]="disabled"
     [id]="id"
+    [attr.name]="name"
     [name]="name"
     [attr.tabindex]="tabIndex"
     [attr.aria-label]="ariaLabel"
@@ -10,6 +11,7 @@
     [attr.aria-describedby]="ariaDescribedBy"
     [attr.aria-disabled]="disabled"
     [attr.aria-checked]="checked"
+    [attr.aria-required]="required"
     [ngModel]="currentValue"
     (ngModelChange)="valueChange($event)"
     #inputElement

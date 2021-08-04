@@ -17,7 +17,7 @@ import {
 } from '@angular/core';
 import { AbstractControl, ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, Validator } from '@angular/forms';
 import { Subject, Subscription } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { filter, takeUntil } from 'rxjs/operators';
 import { Placement } from '@fundamental-ngx/core/shared';
 
 import { DatetimeAdapter } from '@fundamental-ngx/core/datetime';
@@ -91,6 +91,10 @@ export class DatetimePickerComponent<D> implements OnInit, OnDestroy, OnChanges,
     /** Id attribute for input element inside DateTimePicker component */
     @Input()
     inputId: string;
+
+    /** If it is mandatory field */
+    @Input()
+    required = false;
 
     /**
      * Whether the time component should be meridian (am/pm).
@@ -379,7 +383,10 @@ export class DatetimePickerComponent<D> implements OnInit, OnDestroy, OnChanges,
 
         this._calculateTimeOptions();
 
-        this._dateTimeAdapter.localeChanges.pipe(takeUntil(this._onDestroy$)).subscribe(() => {
+        this._dateTimeAdapter.localeChanges.pipe(
+            takeUntil(this._onDestroy$),
+            filter(() => this._inputFieldDate !== '')
+        ).subscribe(() => {
             this._setInput(this.date);
             this._calculateTimeOptions();
             this._changeDetRef.detectChanges();
@@ -486,18 +493,13 @@ export class DatetimePickerComponent<D> implements OnInit, OnDestroy, OnChanges,
      * Function that provides support for ControlValueAccessor that allows to use [(ngModel)] or forms
      */
     writeValue(selected: D): void {
-        if (!this._dateTimeAdapter.isValid(selected)) {
-            this._inputFieldDate = '';
-            this._changeDetRef.detectChanges();
-            return;
-        }
         this.date = selected;
-        this._setTempDateTime();
+        this._isInvalidDateInput = !this._isModelValid(this.date);
         if (this.isCurrentModelValid()) {
+            this._setTempDateTime();
             this._refreshCurrentlyDisplayedCalendarDate(this.date);
-            this._setInput(this.date);
         }
-        this._changeDetRef.detectChanges();
+        this._setInput(this.date);
     }
 
     /**
@@ -573,27 +575,19 @@ export class DatetimePickerComponent<D> implements OnInit, OnDestroy, OnChanges,
      * validation the results are different. It also changes to state of _isInvalidDateInput.
      */
     handleInputChange(inputStr: string): void {
-        const date = this._dateTimeAdapter.parse(inputStr, this._dateTimeFormats.parse.dateTimeInput);
-        this._isInvalidDateInput = !this._isModelValid(date);
+        if (!inputStr) {
+            this._isInvalidDateInput = !this.allowNull;
+            this.onChange(null);
+            return;
+        }
+        this.date = this._dateTimeAdapter.parse(inputStr, this._dateTimeFormats.parse.dateTimeInput);
+        this._isInvalidDateInput = !this._isModelValid(this.date);
 
         if (!this._isInvalidDateInput) {
-            this.date = date;
-            this._setTempDateTime();
-            this.onChange(date);
-            this._refreshCurrentlyDisplayedCalendarDate(date);
-        } else {
-            this.onChange(this.date);
-        }
-
-        if (!inputStr && this.allowNull) {
-            this._isInvalidDateInput = false;
-            this.date = this._dateTimeAdapter.now();
             this._setTempDateTime();
             this._refreshCurrentlyDisplayedCalendarDate(this.date);
-            this.onChange(null);
-        } else if (!inputStr && !this.allowNull) {
-            this._isInvalidDateInput = true;
         }
+        this.onChange(this.date);
     }
 
     /** @hidden */
@@ -616,7 +610,7 @@ export class DatetimePickerComponent<D> implements OnInit, OnDestroy, OnChanges,
     }
 
     private _setInput(dateTime: D): void {
-        this._inputFieldDate = this._formatDateTime(dateTime);
+        this._inputFieldDate = this._isModelValid ? this._formatDateTime(dateTime) : '';
         this._changeDetRef.detectChanges();
     }
 

@@ -31,6 +31,11 @@ import * as complexDialogHtml from '!raw-loader!./examples/dialog-complex/dialog
 import * as objectDialogTs from '!raw-loader!./examples/dialog-object-example/dialog-object-example.component.ts';
 import * as objectDialogHtml from '!raw-loader!./examples/dialog-object-example/dialog-object-example.component.html';
 
+import * as autoLabelTs from '!raw-loader!./examples/auto-label/auto-label-dialog-example.component.ts';
+import * as autoLabelHtml from '!raw-loader!./examples/auto-label/auto-label-dialog-example.component.html';
+
+import * as popoverDialogTs from '!raw-loader!./examples/dialog-inner-popover/dialog-inner-popover.component.ts';
+
 import { DialogService } from '@fundamental-ngx/core/dialog';
 import { ExampleFile } from '../../../documentation/core-helpers/code-example/example-file';
 import { SchemaFactoryService } from '../../../schema/services/schema-factory/schema-factory.service';
@@ -159,13 +164,27 @@ export class DialogDocsComponent {
         {
             language: 'html',
             code: objectDialogHtml,
-            fileName: 'dialog-object'
+            fileName: 'dialog-object-example'
         },
         {
             language: 'typescript',
             code: objectDialogTs,
-            fileName: 'dialog-object',
-            component: 'DialogObjectComponent'
+            fileName: 'dialog-object-example',
+            component: 'DialogObjectExampleComponent'
+        }
+    ];
+
+    autoLabel: ExampleFile[] = [
+        {
+            language: 'html',
+            code: autoLabelHtml,
+            fileName: 'dialog-object-example'
+        },
+        {
+            language: 'typescript',
+            code: autoLabelTs,
+            fileName: 'auto-label-dialog-example',
+            component: 'AutoLabelDialogExampleComponent'
         }
     ];
 
@@ -208,7 +227,7 @@ export class DialogDocsComponent {
             code: secondDialogStackedTs,
             name: 'Second Dialog',
             fileName: 'second-dialog-example',
-            component: 'SecondDialogExample',
+            component: 'SecondDialogExampleComponent',
             entryComponent: true
         },
         {
@@ -216,14 +235,14 @@ export class DialogDocsComponent {
             code: firstDialogStackedTs,
             name: 'First Dialog',
             fileName: 'first-dialog-example',
-            component: 'FirstDialogExample',
+            component: 'FirstDialogExampleComponent',
             entryComponent: true
         },
         {
             language: 'typescript',
             code: dialogStackedTs,
             fileName: 'dialog-stacked-example',
-            component: 'DialogStackedExample',
+            component: 'DialogStackedExampleComponent',
             main: true
         }
     ];
@@ -281,6 +300,15 @@ export class DialogDocsComponent {
             code: complexDialogTs,
             fileName: 'dialog-complex-example',
             component: 'DialogComplexExampleComponent'
+        }
+    ];
+
+    dialogInnerPopover: ExampleFile[] = [
+        {
+            language: 'typescript',
+            code: popoverDialogTs,
+            fileName: 'dialog-inner-popover',
+            component: 'DialogInnerPopoverComponent'
         }
     ];
 

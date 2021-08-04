@@ -1,5 +1,5 @@
 <fdp-form-group [noLabelLayout]="false" [formGroup]="customForm" columnLayout="XL2-L2-M1-S1">
-    <fdp-form-field id="field" label="Array of Strings">
+    <fdp-form-field id="field" label="Array of Strings" required="true">
         <fdp-combobox
             name="field"
             placeholder="Type some text..."
@@ -11,4 +11,7 @@
         <p>Selected Item: {{ selectedItem | json }}</p>
         <p>Form Selected Item: {{ customForm.getRawValue() | json }}</p>
     </fdp-form-field>
+    <ng-template #i18n let-errors>
+        <span *ngIf="errors.required">Field is required</span>
+    </ng-template>
 </fdp-form-group>

@@ -1,20 +1,16 @@
 import { SliderPo } from '../pages/slider.po';
 import {
-    addIsActiveClass,
     browserIsFirefox,
-    checkElementScreenshot,
     clearValue,
     click,
     clickAndMoveElement,
     doesItExist,
-    elementDisplayed, focusElement,
+    elementDisplayed,
     getAttributeByName,
     getElementArrayLength,
-    getImageTagBrowserPlatform,
     getText,
     mouseHoverElement,
     refreshPage,
-    saveElementScreenshot,
     scrollIntoView,
     sendKeys,
     waitForElDisplayed
@@ -77,7 +73,7 @@ describe('slider test suite', function() {
         });
     });
 
-    describe('tick marks and labels examples', function() {
+    xdescribe('tick marks and labels examples', function() {
         it('should check tick marks', () => {
             scrollIntoView(ticksAndLabelsExamples);
             expect(getAttributeByName(ticksAndLabelsExamples + sliderAttr, tickAttribute)).toEqual('true');
@@ -105,8 +101,9 @@ describe('slider test suite', function() {
             const startMinValue = startValuesArr[0];
             const startMaxValue = startValuesArr[1];
 
-            clickAndMoveElement(rangeExamples + sliderHandles, -50, 0);
-            clickAndMoveElement(rangeExamples + sliderHandles, 50, 0, 1);
+            clickAndMoveElement(rangeExamples + sliderHandles, -75, 0);
+            scrollIntoView(rangeExamples);
+            clickAndMoveElement(rangeExamples + sliderHandles, 75, 0, 1);
             const endValuesArr = getText(rangeExamples + valueLabels).split('\n');
             const endMinValue = endValuesArr[0];
             const endMaxValue = endValuesArr[1];
@@ -146,7 +143,7 @@ describe('slider test suite', function() {
         });
     });
 
-    describe('disabled examples', function() {
+    xdescribe('disabled examples', function() {
         it('should check range slider is disabled', () => {
             scrollIntoView(disabledExamples);
             expect(getAttributeByName(disabledExamples + sliderAttr, disabledAttribute)).toBe('true');
@@ -154,7 +151,7 @@ describe('slider test suite', function() {
     });
 
     describe('cozy examples', function() {
-        it('should check cozy property', () => {
+        xit('should check cozy property', () => {
             scrollIntoView(cozyExamples);
             expect(getAttributeByName(cozyExamples + sliderAttr, cozyAttribute)).toBe('true');
         });
@@ -239,41 +236,6 @@ describe('slider test suite', function() {
         it('should check examples visual regression', () => {
             sliderPage.saveExampleBaselineScreenshot();
             expect(sliderPage.compareWithBaseline()).toBeLessThan(5);
-        });
-
-        xit('should check slider handle hover state', () => {
-            const elementCount = getElementArrayLength(sliderHandles);
-
-            for (let i = 0; elementCount > i; i++) {
-                scrollIntoView(sliderHandles, i);
-                mouseHoverElement(sliderHandles, i);
-                saveElementScreenshot(sliderHandles, `slider-example-slider-handle-${i}-hover-state-${getImageTagBrowserPlatform()}`, sliderPage.getScreenshotFolder(), i);
-                expect(checkElementScreenshot(sliderHandles, `slider-example-slider-handle-${i}-hover-state-${getImageTagBrowserPlatform()}`, sliderPage.getScreenshotFolder(), i))
-                    .toBeLessThan(1, `slider handle ${i} hover state mismatch`);
-            }
-        });
-
-        xit('should check slider handle active state', () => {
-            const elementCount = getElementArrayLength(sliderHandles);
-
-            for (let i = 0; elementCount > i; i++) {
-                scrollIntoView(sliderHandles, i);
-                addIsActiveClass(sliderHandles, i);
-                saveElementScreenshot(sliderHandles, `slider-example-slider-handle-${i}-active-state-${getImageTagBrowserPlatform()}`, sliderPage.getScreenshotFolder(), i);
-                expect(checkElementScreenshot(sliderHandles, `slider-example-slider-handle-${i}-active-state-${getImageTagBrowserPlatform()}`, sliderPage.getScreenshotFolder(), i))
-                    .toBeLessThan(1, `slider handle ${i} active state mismatch`);
-            }
-        });
-
-        xit('should check slider handle focus state', () => {
-            const elementCount = getElementArrayLength(sliderHandles);
-
-            for (let i = 0; elementCount > i; i++) {
-                focusElement(sliderHandles, i);
-                saveElementScreenshot(sliderHandles, `slider-example-slider-handle-${i}-focus-state-${getImageTagBrowserPlatform()}`, sliderPage.getScreenshotFolder(), i);
-                expect(checkElementScreenshot(sliderHandles, `slider-example-slider-handle-${i}-focus-state-${getImageTagBrowserPlatform()}`, sliderPage.getScreenshotFolder(), i))
-                    .toBeLessThan(1, `slider handle ${i} focus state mismatch`);
-            }
         });
     });
 

@@ -71,7 +71,7 @@ describe('Carousel test suite', function() {
             checkCarouselNavigation(1, 3);
         });
 
-        it('should scroll vertically', () => {
+        xit('should scroll vertically', () => {
             scrollIntoView(sectionTitle, 1);
             const imgLocationX = Math.floor(getElementLocation(displayedImg, 1, 'x'));
             const imgLocationY = Math.floor(getElementLocation(displayedImg, 1, 'y'));
@@ -102,7 +102,7 @@ describe('Carousel test suite', function() {
             expect(getText(displayedCards, 2)).toEqual(originalThirdCard);
         });
 
-        it('should check multiple active items shown', () => {
+        xit('should check multiple active items shown', () => {
             expect(getAttributeByName(carouselProperties, visibilityCount, 2)).toBe('3');
             expect(getElementArrayLength(multiDisplayedCards)).toBe(3);
         });
@@ -178,7 +178,10 @@ describe('Carousel test suite', function() {
         });
 
         it('should check navigation', () => {
-           checkCarouselNavigation(4, 13);
+            scrollIntoView(displayedImg, 4);
+            mouseHoverElement(displayedImg, 4);
+            waitForElDisplayed(contentNavBtns);
+            checkCarouselNavigation(4, 13);
         });
     });
 

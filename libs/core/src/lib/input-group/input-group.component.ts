@@ -67,6 +67,10 @@ export class InputGroupComponent implements ControlValueAccessor, OnInit, OnDest
     @Input()
     compact?: boolean;
 
+    /** If it is mandatory field */
+    @Input()
+    required = false;
+
     /** Whether the input group is inline. */
     @Input()
     inline = false;
@@ -207,18 +211,6 @@ export class InputGroupComponent implements ControlValueAccessor, OnInit, OnDest
         }
     }
 
-    /** @hidden
-     * calculate the correct ids for input aria-labelledby
-     */
-    private _getAriaLabelledbyIdsForInput(): string {
-      let ariaLabelledByIds = this.ariaLabelledby ? this.ariaLabelledby + ' ' : '';
-      if (!this.button) {
-          ariaLabelledByIds += this._addOnNonButtonId;
-      }
-
-      return ariaLabelledByIds;
-    }
-
     /** @hidden */
     ngOnDestroy(): void {
         this._subscriptions.unsubscribe();
@@ -265,6 +257,19 @@ export class InputGroupComponent implements ControlValueAccessor, OnInit, OnDest
             event.preventDefault();
         }
     }
+
+    /** @hidden
+     * calculate the correct ids for input aria-labelledby
+     */
+     _getAriaLabelledbyIdsForInput(): string {
+      let ariaLabelledByIds = this.ariaLabelledby ? this.ariaLabelledby + ' ' : '';
+      if (!this.button) {
+          ariaLabelledByIds += this._addOnNonButtonId;
+      }
+
+      return ariaLabelledByIds;
+    }
+
     /** @hidden */
     private _listenElementEvents(): void {
         fromEvent(this.elementRef.nativeElement, 'focus', { capture: true }).pipe(
